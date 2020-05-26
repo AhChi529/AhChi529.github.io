@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>关于我 | 阿啾的个人博客</title>
-  <meta name="keywords" content="">
-  <meta name="description" content="关于我 | 阿啾的个人博客">
+  <title>css解决高度塌陷的办法 | 阿啾的个人博客</title>
+  <meta name="keywords" content=" CSS ">
+  <meta name="description" content="css解决高度塌陷的办法 | 阿啾的个人博客">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta property="og:type" content="website">
 <meta property="og:title" content="关于我">
@@ -222,24 +222,36 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="page-" class="article article-type-page" itemscope itemprop="blogPost">
+        <article id="post-css解决高度塌陷的办法" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">关于我</h1>
+        <h1 class="article-title">css解决高度塌陷的办法</h1>
     
     <div class="article-meta">
         
         
         
+        <span class="book">
+            
+                <a  data-rel="大前端">大前端</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            
+            <a class="color4">CSS</a>
+            
+        </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2020-05-15 14:02:00'>2020-05-13 10:04</time>
+        创建时间:<time class="date" title='更新时间: 2020-05-26 10:54:31'>2020-05-26 10:07</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:0</span>
+        <span>字数:353</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -269,7 +281,7 @@
     
     <div class="toc-ref">
     
-        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、什么是高度塌陷？"><span class="toc-text">一、什么是高度塌陷？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、原始代码"><span class="toc-text">二、原始代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、解决方法"><span class="toc-text">三、解决方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、给父元素设置overflow-hidden"><span class="toc-text">1、给父元素设置overflow:hidden</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、在浮动元素的下方添加一个空div标签-清除浮动"><span class="toc-text">2、在浮动元素的下方添加一个空div标签,清除浮动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3、overflow-zoom"><span class="toc-text">3、overflow+zoom</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4、-after-zoom"><span class="toc-text">4、:after+zoom</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5、给父元素添加浮动"><span class="toc-text">5、给父元素添加浮动</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -285,7 +297,59 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p><div class='inner-toc'><h2>目录</h2><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、什么是高度塌陷？"><span class="toc-text">一、什么是高度塌陷？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、原始代码"><span class="toc-text">二、原始代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、解决方法"><span class="toc-text">三、解决方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、给父元素设置overflow-hidden"><span class="toc-text">1、给父元素设置overflow:hidden</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、在浮动元素的下方添加一个空div标签-清除浮动"><span class="toc-text">2、在浮动元素的下方添加一个空div标签,清除浮动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3、overflow-zoom"><span class="toc-text">3、overflow+zoom</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4、-after-zoom"><span class="toc-text">4、:after+zoom</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5、给父元素添加浮动"><span class="toc-text">5、给父元素添加浮动</span></a></li></ol></li></ol></div></p>
+<h2 id="一、什么是高度塌陷？"><a href="#一、什么是高度塌陷？" class="headerlink" title="一、什么是高度塌陷？"></a>一、什么是高度塌陷？</h2><p>在文档流中，父元素的高度默认是被子元素撑开的，也就是子元素多高，父元素就多高。但是当子元素设置浮动之后，子元素会完全脱离文档流，此时将会导致子元素无法撑起父元素的高度，导致父元素的高度塌陷。</p>
+<h2 id="二、原始代码"><a href="#二、原始代码" class="headerlink" title="二、原始代码"></a>二、原始代码</h2><pre><code>//CSS
+&lt;style&gt;
+    .box1 {
+        border: 1px solid red;
+    }
+    .box2 {
+        background: yellow;
+        width: 100px;
+        height: 100px;
+        float: left;
+    }
+&lt;/style&gt;
+
+// HTML
+&lt;div class=&quot;box1&quot;&gt;
+    &lt;div class=&quot;box2&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre><h2 id="三、解决方法"><a href="#三、解决方法" class="headerlink" title="三、解决方法"></a>三、解决方法</h2><h3 id="1、给父元素设置overflow-hidden"><a href="#1、给父元素设置overflow-hidden" class="headerlink" title="1、给父元素设置overflow:hidden"></a>1、给父元素设置<code>overflow:hidden</code></h3><p>缺点：会把定位在元素之外的元素给隐藏</p>
+<pre><code>&lt;style&gt;
+    .box1 {
+        overflow: hidden;
+    }
+&lt;/style&gt;</code></pre><h3 id="2、在浮动元素的下方添加一个空div标签-清除浮动"><a href="#2、在浮动元素的下方添加一个空div标签-清除浮动" class="headerlink" title="2、在浮动元素的下方添加一个空div标签,清除浮动"></a>2、在浮动元素的下方添加一个空div标签,清除浮动</h3><p>缺点：不利于优化<br>优点：兼容性强</p>
+<pre><code>//CSS
+&lt;style&gt;
+    .box3 {
+        clear: both;
+    }
+&lt;/style&gt;
+
+//HTML
+&lt;div class=&quot;box1&quot;&gt;
+    &lt;div class=&quot;box2&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;box3&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre><h3 id="3、overflow-zoom"><a href="#3、overflow-zoom" class="headerlink" title="3、overflow+zoom"></a>3、overflow+zoom</h3><p>缺点：对margin属性有影响，不能设负值<br>优点：兼容性强</p>
+<pre><code>.box1{
+    overflow: hidden;
+    zoom: 1;
+}</code></pre><h3 id="4、-after-zoom"><a href="#4、-after-zoom" class="headerlink" title="4、:after+zoom"></a>4、:after+zoom</h3><p>优点：最好用，最推荐，兼容性强</p>
+<pre><code>.box1{
+    zoom: 1;
+}
+.box1:after{
+    content: &quot;&quot;;
+    display: block;
+    clear: both;
+    height: 0;
+    overflow: hidden;
+}</code></pre><h3 id="5、给父元素添加浮动"><a href="#5、给父元素添加浮动" class="headerlink" title="5、给父元素添加浮动"></a>5、给父元素添加浮动</h3><p>缺点：父元素设置浮动后，父元素的宽度会随着子元素变化</p>
+<pre><code>.box1{
+    float: left;
+}</code></pre>
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 1909744737@qq.com </span>
     </div>
@@ -296,6 +360,18 @@
     <a  class="dashang" onclick="dashangToggle()">赏</a>
 </p>
 
+
+<div class="article_copyright">
+    <p><span class="copy-title">文章标题:</span>css解决高度塌陷的办法</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">414</span></p>
+    <p><span class="copy-title">本文作者:</span><a  title="阿啾">阿啾</a></p>
+    <p><span class="copy-title">发布时间:</span>2020-05-26, 10:07:23</p>
+    <p><span class="copy-title">最后更新:</span>2020-05-26, 10:54:31</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/05/26/css%E8%A7%A3%E5%86%B3%E9%AB%98%E5%BA%A6%E5%A1%8C%E9%99%B7%E7%9A%84%E5%8A%9E%E6%B3%95/" title="css解决高度塌陷的办法">http://yoursite.com/2020/05/26/css%E8%A7%A3%E5%86%B3%E9%AB%98%E5%BA%A6%E5%A1%8C%E9%99%B7%E7%9A%84%E5%8A%9E%E6%B3%95/</a>
+    <p>
+        <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+    </p>
+</div>
 
 
 
